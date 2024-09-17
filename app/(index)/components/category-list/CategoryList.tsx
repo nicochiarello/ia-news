@@ -7,10 +7,10 @@ const CategoryList = () => {
       {categories.map((category) => (
         <li
           className="text-xl cursor-pointer hover:font-semibold"
-          key={category}
+          key={category.name}
         >
-          {category[0].toUpperCase()}
-          {category.slice(1)}{" "}
+          {category.name[0].toUpperCase()}
+          {category.name.slice(1)}{" "}
         </li>
       ))}
     </ul>
