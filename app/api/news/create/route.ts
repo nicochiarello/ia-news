@@ -87,7 +87,7 @@ const generateNews = async (category: { name: string; query: string }) => {
 
 // Función para generar una consulta para Unsplash usando Gemini
 const generateImageQuery = async (newsText: string) => {
-  const prompt = `Genera una consulta de búsqueda para Unsplash basada en el siguiente texto: "${newsText}". La consulta debe ser concisa y relevante para obtener una imagen adecuada.`;
+  const prompt = `Genera una consulta de búsqueda para Unsplash basada en el siguiente texto: "${newsText}". Usa una sola palabra clave o una frase corta (en ingles).`;
   const result = await model.generateContent(prompt);
   return result.response.text().trim();
 };
