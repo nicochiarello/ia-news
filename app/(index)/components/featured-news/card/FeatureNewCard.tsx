@@ -8,7 +8,7 @@ const FeatureNewCard = ({
   span?: string;
 }) => {
   return (
-    <div className={`relative ${span && span}`}>
+    <div className={`relative ${span && span} hover:shadow-xl cursor-pointer`}>
       <div className="w-full h-full bg-black">
         <Image
           className="w-full h-full object-cover absolute top-0 left-0 opacity-80"
