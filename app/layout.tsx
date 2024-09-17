@@ -22,7 +22,7 @@ export default function RootLayout({
         className={`flex flex-col min-h-screen w-screen overflow-hidden antialiased bg-gray-200 text-black ${AlumniSans.className}`}
       >
         <Navbar />
-        <div className="flex flex-1 min-h-full">{children}</div>
+        <div className="flex flex-1 min-h-full max-w-[1400px] mx-auto ">{children}</div>
         <Footer />
       </body>
     </html>
