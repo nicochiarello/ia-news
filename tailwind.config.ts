@@ -13,6 +13,9 @@ const config: Config = {
         foreground: "var(--foreground)",
         primary: "#8D3AE2",
       },
+      screens: {
+        xs: "480px", // Puedes ajustar el tamaño según tus necesidades
+      },
     },
   },
   plugins: [],
