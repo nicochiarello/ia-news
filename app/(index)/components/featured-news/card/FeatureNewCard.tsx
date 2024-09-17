@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const FeatureNewCard = ({
   data,
@@ -8,7 +9,10 @@ const FeatureNewCard = ({
   span?: string;
 }) => {
   return (
-    <div className={`relative ${span && span} hover:shadow-xl cursor-pointer`}>
+    <Link
+      href={`/posts/${data.slug}`}
+      className={`relative ${span && span} hover:shadow-xl cursor-pointer`}
+    >
       <div className="w-full h-full bg-black">
         <Image
           className="w-full h-full object-cover absolute top-0 left-0 opacity-80"
@@ -24,7 +28,7 @@ const FeatureNewCard = ({
         </h2>
         <p className="text-2xl font-semibold text-shadow">{data.title}</p>
       </div>
-    </div>
+    </Link>
   );
 };
 
