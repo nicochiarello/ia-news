@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "./components/navbar/Navbar";
-import {Alumni_Sans} from 'next/font/google'
+import { Alumni_Sans } from "next/font/google";
+import Footer from "./components/footer/Footer";
 
-const AlumniSans = Alumni_Sans({ subsets: ['latin'] })
+const AlumniSans = Alumni_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "IA News",
@@ -17,9 +18,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased bg-gray-200 text-black ${AlumniSans.className}`}>
+      <body
+        className={`flex flex-col min-h-screen w-screen overflow-hidden antialiased bg-gray-200 text-black ${AlumniSans.className}`}
+      >
         <Navbar />
-        {children}
+        <div className="flex flex-1 min-h-full">{children}</div>
+        <Footer />
       </body>
     </html>
   );
