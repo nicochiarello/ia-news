@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { createApi } from "unsplash-js";
-import { categories } from "@/utils/categories";
 import mongoose from "mongoose";
+import { categories } from "@/utils/categories";
 
 // Inicializar la API de Google Generative AI
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY as string);
@@ -56,7 +56,6 @@ const generateNews = async (category: { name: string; query: string }) => {
     "inusitada",
     "inverosímil",
     "inquietante",
-    "inquietante",
   ];
   const randomIndex = Math.floor(Math.random() * randomDetails.length);
   const prompt = `Genera una noticia ${randomDetails[randomIndex]} sobre la categoría "${category.name}". Proporciona un título, una descripción breve, y el cuerpo del texto completo.`;
@@ -86,18 +85,25 @@ const generateNews = async (category: { name: string; query: string }) => {
   return news;
 };
 
-// Función para obtener una imagen de Unsplash
+// Función para generar una consulta para Unsplash usando Gemini
+const generateImageQuery = async (newsText: string) => {
+  const prompt = `Genera una consulta de búsqueda para Unsplash basada en el siguiente texto: "${newsText}". La consulta debe ser concisa y relevante para obtener una imagen adecuada.`;
+  const result = await model.generateContent(prompt);
+  return result.response.text().trim();
+};
+
+// Función para obtener una imagen de Unsplash usando la consulta generada
 const getUnsplashImage = async (query: string) => {
   try {
     const result = await unsplash.search.getPhotos({
       query,
       page: 1,
-      perPage: 1,
+      perPage: 5,
       orientation: "landscape",
     });
-    const photo = result.response?.results[0];
-    if (photo) {
-      return photo.urls.regular;
+    const photos = result.response?.results;
+    if (photos && photos.length > 0) {
+      return photos[0].urls.regular;
     }
   } catch (error) {
     console.error("Error fetching image from Unsplash:", error);
@@ -116,14 +122,17 @@ export async function GET() {
   await connectDB(); // Conectar a MongoDB
   const randomCategory = getRandomCategory();
   const newsData = await generateNews(randomCategory);
-  const imageUrl = await getUnsplashImage(randomCategory.query);
+
+  // Generar la consulta de imagen usando Gemini
+  const imageQuery = await generateImageQuery(newsData.title);
+  const imageUrl = await getUnsplashImage(imageQuery);
 
   // Crear y guardar el documento en MongoDB
   const newNews = new News({
     title: newsData.title,
     description: newsData.description,
     body: newsData.body,
-    category: randomCategory.name,
+    category: newsData.category,
     imageUrl,
   });
 
