@@ -1,8 +1,12 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const LatestNewCard = ({ data }: { data: Record<string, string> }) => {
   return (
-    <div className="flex flex-col w-full h-[28rem] justify-between cursor-pointer hover:shadow-lg">
+    <Link
+      href={`/posts/${data.slug}`}
+      className="flex flex-col w-full h-[28rem] justify-between cursor-pointer hover:shadow-lg"
+    >
       <div className="w-full h-[50%] bg-blue-200 relative">
         <Image
           className="w-full h-full object-cover"
@@ -32,7 +36,7 @@ const LatestNewCard = ({ data }: { data: Record<string, string> }) => {
           {data.category || "Categoría de la noticia"}
         </p>
       </div>
-    </div>
+    </Link>
   );
 };
 
