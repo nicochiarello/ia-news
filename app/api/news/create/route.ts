@@ -31,6 +31,7 @@ const newsSchema = new mongoose.Schema({
   description: String,
   body: String,
   category: String,
+  slug: String,
   imageUrl: String,
   createdAt: { type: Date, default: Date.now },
 });
@@ -118,7 +119,7 @@ export const getRandomCategory = () => {
 };
 
 // Función principal para generar y guardar la noticia
-export async function GET() {
+export async function POST() {
   await connectDB(); // Conectar a MongoDB
   const randomCategory = getRandomCategory();
   const newsData = await generateNews(randomCategory);
@@ -133,6 +134,7 @@ export async function GET() {
     description: newsData.description,
     body: newsData.body,
     category: newsData.category,
+    slug: newsData.title.toLowerCase().replace(/\s+/g, "-"),
     imageUrl,
   });
 
