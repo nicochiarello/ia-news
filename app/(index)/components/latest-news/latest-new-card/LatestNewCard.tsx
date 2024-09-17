@@ -1,30 +1,36 @@
-const LatestNewCard = () => {
-  const body = ` Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga eaque
-        dolores ad amet deleniti sed dicta, accusantium error quae itaque minus
-        eos et, quidem ratione, eveniet beatae quos cumque ipsa! Nemo quia
-        dignissimos sunt iusto accusantium debitis rem nostrum modi.`;
+import Image from "next/image";
+
+const LatestNewCard = ({ data }: { data: Record<string, string> }) => {
   return (
     <div className="flex flex-col w-full h-[28rem] justify-between cursor-pointer hover:shadow-lg">
       <div className="w-full h-[50%] bg-blue-200 relative">
-        <img
+        <Image
           className="w-full h-full object-cover"
-          src="https://via.placeholder.com/300"
+          src={data.imageUrl || "https://via.placeholder.com/600"}
           alt="latest new"
+          width={600}
+          height={600}
         />
         <div className="w-[85%] p-2 bg-gray-200 absolute bottom-0 left-0 translate-y-[60%]">
           <p className="font-semibold text-2xl truncate">
-            Este es el titulo de la nota
+            {data.title || "Titulo de la noticia"}
           </p>
-          <p className="hidden md:block truncate">Esta es la descripcion de la nota</p>
+          <p className="hidden md:block truncate">
+            {data.description || "Descripción de la noticia"}
+          </p>
           <div className="w-[40%] h-[1.5px] bg-primary mt-4"></div>
         </div>
       </div>
       <div className="p-2 mt-[3.5rem] flex-1">
-        <p className="truncate-4-lines">{body}</p>
+        <p className="truncate-4-lines">
+          {data.description || "Descripción de la noticia"}
+        </p>
       </div>
 
       <div className="py-4 px-2">
-        <p className="text-primary">Category</p>
+        <p className="text-primary">
+          {data.category || "Categoría de la noticia"}
+        </p>
       </div>
     </div>
   );
