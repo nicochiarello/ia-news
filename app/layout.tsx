@@ -19,10 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`flex flex-col min-h-screen w-screen overflow-hidden antialiased bg-gray-200 text-black ${AlumniSans.className}`}
+        className={`flex flex-col min-h-screen h-fit w-screen overflow-x-hidden antialiased bg-gray-200 text-black ${AlumniSans.className}`}
       >
         <Navbar />
-        <div className="flex flex-1 min-h-full max-w-[1400px] mx-auto ">{children}</div>
+        <div className="flex flex-1 min-h-full w-full max-w-[1050px] mx-auto px-2">{children}</div>
         <Footer />
       </body>
     </html>
