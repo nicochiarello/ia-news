@@ -1,9 +1,12 @@
 import CategoryList from "../components/category-list/CategoryList";
 import FeaturedNews from "./components/featured-news/FeaturedNews";
 
+// once a day
+export const revalidate = 86400;
+
 export const getNews = async (category: string) => {
   const response = await fetch(
-    `http://localhost:3000/api/news/category/${category}/get`,
+    `${process.env.DB_URI}/api/news/category/${category}/get`,
     {
       next: {
         revalidate: 0,

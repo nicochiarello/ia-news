@@ -1,9 +1,19 @@
 import Image from "next/image";
 import RelatedNewsCard from "./components/RelatedNewsCard";
 
+export async function generateStaticParams() {
+  const data: { news: Record<string, string>[] } = await fetch(
+    `${process.env.DB_URI}/api/news/get`
+  ).then((res) => res.json());
+
+  return data.news.map((post) => ({
+    id: post._id,
+  }));
+}
+
 export async function Page({ params }: { params: { name: string } }) {
   const response = await fetch(
-    `http://localhost:3000/api/news/${params.name}/info`
+    `${process.env.DB_URI}/api/news/${params.name}/info`
   ).then((res) => res.json());
 
   const post = response.data.news;

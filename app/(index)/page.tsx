@@ -3,7 +3,7 @@ import FeaturedNews from "./components/featured-news/FeaturedNews";
 import LatestNews from "./components/latest-news/LatestNews";
 
 export const getNews = async () => {
-  const response = await fetch("http://localhost:3000/api/news/get", {
+  const response = await fetch(`${process.env.DB_URI}/api/news/get`, {
     next: {
       revalidate: 0,
     },
@@ -12,6 +12,9 @@ export const getNews = async () => {
 
   return data.news;
 };
+
+// once a day
+export const revalidate = 86400;
 
 export default async function Home() {
   const newsReponse = await getNews();
