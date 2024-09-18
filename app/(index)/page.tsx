@@ -23,7 +23,7 @@ export default async function Home() {
     <div className="flex flex-1 flex-col">
       <CategoryList />
       <FeaturedNews featured={newsReponse.slice(0, 4)} />
-      <LatestNews news={newsReponse.slice(4)} />
+      <LatestNews news={newsReponse.slice(4,25)} />
     </div>
   );
 }
