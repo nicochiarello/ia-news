@@ -3,6 +3,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { createApi } from "unsplash-js";
 import mongoose from "mongoose";
 import { categories } from "@/utils/categories";
+import { News } from "@/app/schemas/NewsSchema";
 
 // Inicializar la API de Google Generative AI
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY as string);
@@ -25,18 +26,7 @@ const connectDB = async () => {
   }
 };
 
-// Crear el modelo de Mongoose para las noticias
-const newsSchema = new mongoose.Schema({
-  title: String,
-  description: String,
-  body: String,
-  category: String,
-  slug: String,
-  imageUrl: String,
-  createdAt: { type: Date, default: Date.now },
-});
 
-export const News = mongoose.models.News || mongoose.model("News", newsSchema);
 
 // Función para generar la noticia con formato limpio
 const generateNews = async (category: { name: string; query: string }) => {
@@ -113,7 +103,7 @@ const getUnsplashImage = async (query: string) => {
 };
 
 // Función para obtener una categoría aleatoria
-export const getRandomCategory = () => {
+const getRandomCategory = () => {
   const randomIndex = Math.floor(Math.random() * categories.length);
   return categories[randomIndex];
 };

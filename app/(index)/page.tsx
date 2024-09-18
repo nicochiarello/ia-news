@@ -2,7 +2,7 @@ import CategoryList from "../components/category-list/CategoryList";
 import FeaturedNews from "./components/featured-news/FeaturedNews";
 import LatestNews from "./components/latest-news/LatestNews";
 import mongoose from "mongoose";
-import { News } from "../api/news/create/route";
+import { News } from "../schemas/NewsSchema";
 
 // Conexión a MongoDB
 const connectDB = async () => {
@@ -16,7 +16,7 @@ const connectDB = async () => {
   }
 };
 
-export const getNews = async (): Promise<Record<string, string>[]> => {
+const getNews = async (): Promise<Record<string, string>[]> => {
   try {
     await connectDB(); // Conectar a la base de datos
 

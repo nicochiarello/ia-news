@@ -1,7 +1,7 @@
 import CategoryList from "../components/category-list/CategoryList";
 import FeaturedNews from "./components/featured-news/FeaturedNews";
 import mongoose from "mongoose";
-import { News } from "../api/news/create/route";
+import { News } from "../schemas/NewsSchema";
 import { categories } from "@/utils/categories";
 import { normalizeString } from "@/utils/normalizeString";
 
@@ -18,7 +18,7 @@ const connectDB = async () => {
 };
 
 // Función para manejar la solicitud GET
-export async function getNews(category: string) {
+async function getNews(category: string) {
   // Conectar a la base de datos
   await connectDB();
 

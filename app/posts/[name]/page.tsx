@@ -1,7 +1,7 @@
 import Image from "next/image";
 import RelatedNewsCard from "./components/RelatedNewsCard";
 import mongoose from "mongoose";
-import { News } from "@/app/api/news/create/route";
+import { News } from "@/app/schemas/NewsSchema";
 
 // Conexión a MongoDB
 const connectDB = async () => {
@@ -15,7 +15,7 @@ const connectDB = async () => {
   }
 };
 
-export async function getPost(id: string) {
+async function getPost(id: string) {
   // Conectar a la base de datos
   await connectDB();
 
@@ -44,32 +44,32 @@ export async function getPost(id: string) {
   }
 }
 
-export const getStaticPaths = async () => {
-  // Conectar a MongoDB
-  await connectDB();
+// export const getStaticPaths = async () => {
+//   // Conectar a MongoDB
+//   await connectDB();
 
-  try {
-    // Obtener los IDs de las noticias
-    const posts = await News.find({}).select("_id");
+//   try {
+//     // Obtener los IDs de las noticias
+//     const posts = await News.find({}).select("_id");
 
-    // Crear los paths usando los IDs de MongoDB
-    const paths = posts.map((post: { _id: mongoose.Types.ObjectId }) => ({
-      params: { id: post._id.toString() }, // Convertir ObjectId a string
-    }));
+//     // Crear los paths usando los IDs de MongoDB
+//     const paths = posts.map((post: { _id: mongoose.Types.ObjectId }) => ({
+//       params: { id: post._id.toString() }, // Convertir ObjectId a string
+//     }));
 
-    // Devolver los paths generados y fallback en 'blocking' para server-render si no existe el path
-    return {
-      paths,
-      fallback: "blocking",
-    };
-  } catch (error) {
-    console.error("Error al obtener los paths:", error);
-    return {
-      paths: [],
-      fallback: false, // No se generarán paths adicionales en caso de error
-    };
-  }
-};
+//     // Devolver los paths generados y fallback en 'blocking' para server-render si no existe el path
+//     return {
+//       paths,
+//       fallback: "blocking",
+//     };
+//   } catch (error) {
+//     console.error("Error al obtener los paths:", error);
+//     return {
+//       paths: [],
+//       fallback: false, // No se generarán paths adicionales en caso de error
+//     };
+//   }
+// };
 
 export async function Page({ params }: { params: { name: string } }) {
   const response = await getPost(params.name);
