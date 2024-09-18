@@ -119,7 +119,7 @@ export const getRandomCategory = () => {
 };
 
 // Función principal para generar y guardar la noticia
-export async function POST() {
+export async function GET() {
   await connectDB(); // Conectar a MongoDB
   const randomCategory = getRandomCategory();
   const newsData = await generateNews(randomCategory);
