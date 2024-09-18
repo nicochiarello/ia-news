@@ -128,6 +128,12 @@ export async function POST() {
   const imageQuery = await generateImageQuery(newsData.title);
   const imageUrl = await getUnsplashImage(imageQuery);
 
+  // Verificar la cantidad de noticias y eliminar la más antigua si es necesario
+  const totalNewsCount = await News.countDocuments();
+  if (totalNewsCount >= 50) {
+    await News.findOneAndDelete({}, { sort: { createdAt: 1 } }); // Elimina la más antigua
+  }
+
   // Crear y guardar el documento en MongoDB
   const newNews = new News({
     title: newsData.title,
