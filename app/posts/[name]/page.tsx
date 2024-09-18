@@ -44,6 +44,33 @@ export async function getPost(id: string) {
   }
 }
 
+export const getStaticPaths = async () => {
+  // Conectar a MongoDB
+  await connectDB();
+
+  try {
+    // Obtener los IDs de las noticias
+    const posts = await News.find({}).select("_id");
+
+    // Crear los paths usando los IDs de MongoDB
+    const paths = posts.map((post: { _id: mongoose.Types.ObjectId }) => ({
+      params: { id: post._id.toString() }, // Convertir ObjectId a string
+    }));
+
+    // Devolver los paths generados y fallback en 'blocking' para server-render si no existe el path
+    return {
+      paths,
+      fallback: "blocking",
+    };
+  } catch (error) {
+    console.error("Error al obtener los paths:", error);
+    return {
+      paths: [],
+      fallback: false, // No se generarán paths adicionales en caso de error
+    };
+  }
+};
+
 export async function Page({ params }: { params: { name: string } }) {
   const response = await getPost(params.name);
 
