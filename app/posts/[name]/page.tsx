@@ -71,7 +71,7 @@ async function getPost(id: string) {
 //   }
 // };
 
-export async function Page({ params }: { params: { name: string } }) {
+export default async function Page({ params }: { params: { name: string } }) {
   const response = await getPost(params.name);
 
   const post = response?.news;
@@ -105,5 +105,3 @@ export async function Page({ params }: { params: { name: string } }) {
     </div>
   );
 }
-
-export default Page;
