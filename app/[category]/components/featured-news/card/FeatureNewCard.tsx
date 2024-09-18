@@ -11,7 +11,7 @@ const FeatureNewCard = ({
   return (
     <Link
       href={`/posts/${data.slug}`}
-      className={`relative ${span && span} hover:shadow-xl cursor-pointer`}
+      className={`relative ${span && span} aspect-[3/2]  hover:shadow-xl cursor-pointer`}
     >
       <div className="w-full h-full bg-black">
         <Image
